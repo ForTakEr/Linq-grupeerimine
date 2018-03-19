@@ -10,37 +10,42 @@ namespace GrupeerimiseHarjutus
     {
         static void Main(string[] args)
         {
-            var names = new List<Human>
+            var names = new List<string>
             {
-                new Human(){Name = "Markus"},
-                new Human(){Name = "Grete"},
-                new Human(){Name = "Juhan"},
-                new Human(){Name = "Sam"},
-                new Human(){Name = "Stiven"},
-                new Human(){Name = "Tanel"},
-                new Human(){Name = "Kevin"},
-                new Human(){Name = "Saskia"},
-                new Human(){Name = "Kristi"}
+                "Markus",
+                "Grete",
+                "Juhan",
+                "Sam",
+                "Stiven",
+                "Tanel",
+                "Kevin",
+                "Saskia",
+                "Kristi"
             };
 
             #region Pikkuse järgi grupeerimine
-            var nimed = (from x in names
-                         group x by x.Name.Length into NewGroup
-                         select NewGroup);
+            Console.WriteLine("1.Pikkused:\n");
+            var Nimed = (from nimi in names
+                         orderby nimi ascending
+                         select nimi).ToList();
 
-            Console.WriteLine("Nime pikkus: \n");
-            foreach (var grupp in nimed)
+            foreach (var item in Nimed)
             {
-                foreach (var item in grupp)
-                {
-                    Console.WriteLine(item.Name + " - " +  item.Name.Length);
-                }
+                Console.WriteLine("Nimi: " + item + " | tähti: " + item.Count());
             }
 
+            var pikkused = from nimi in Nimed
+                           group nimi.Length by nimi.Length into x
+                           select x;
+
+            Console.WriteLine();
+
+            foreach (var item in pikkused)
+            {
+                Console.WriteLine("{0} tähti = {1} nime", item.Key, item.Count());
+            }
 
             #endregion
-
-
 
             Console.ReadLine();
         }
